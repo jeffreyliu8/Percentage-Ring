@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Custom View</string>
+    <string name="title_activity_default">DefaultActivity</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <declare-styleable name="PercentView">
+        <attr name="ringColor" format="color" />
+        <attr name="numerator" format="integer" />
+        <attr name="denominator" format="integer" />
+        <attr name="lowerText" format="string" />
+        <attr name="upperTextSize" format="integer" />
+        <attr name="lowerTextSize" format="integer" />
+        <attr name="upperYOffset" format="integer" />
+        <attr name="lowerYOffset" format="integer" />
+    </declare-styleable>
+</resources>

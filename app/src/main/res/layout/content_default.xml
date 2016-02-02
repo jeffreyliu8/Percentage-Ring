@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="javis.customview.DefaultActivity"
+    tools:showIn="@layout/activity_default">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#002E45"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="4">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="WEEKLY"
+                    android:textColor="@color/colorRingFillGreen" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:alpha="0.6"
+                    android:text="1/10 - 1/16"
+                    android:textColor="@android:color/white" />
+
+                <javis.customview.PercentView xmlns:customNS="http://schemas.android.com/apk/res/javis.customview"
+                    android:id="@+id/circle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    customNS:denominator="4"
+                    customNS:lowerText="of 4 days"
+                    customNS:numerator="2"
+                    customNS:ringColor="@color/colorRingFillGreen" />
+            </LinearLayout>
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="DAILY"
+                android:textColor="@color/colorRingFillBlue" />
+
+            <javis.customview.PercentView xmlns:customNS="http://schemas.android.com/apk/res/javis.customview"
+                android:id="@+id/circle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                customNS:denominator="30"
+                customNS:lowerText="of 30 min"
+                customNS:lowerTextSize="40"
+                customNS:lowerYOffset="90"
+                customNS:numerator="8"
+                customNS:ringColor="@color/colorRingFillBlue"
+                customNS:upperTextSize="210"
+                customNS:upperYOffset="20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Edit Goals"
+                android:textColor="@color/colorRingFillBlue" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="4">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="MONTHLY"
+                    android:textColor="@color/colorRingFillRed" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:alpha="0.6"
+                    android:text="January"
+                    android:textColor="@android:color/white" />
+
+                <javis.customview.PercentView xmlns:customNS="http://schemas.android.com/apk/res/javis.customview"
+                    android:id="@+id/circle3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    customNS:denominator="16"
+                    customNS:lowerText="of 16 days"
+                    customNS:numerator="12"
+                    customNS:ringColor="@color/colorRingFillRed" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
