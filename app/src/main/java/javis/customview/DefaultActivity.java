@@ -48,19 +48,14 @@ public class DefaultActivity extends AppCompatActivity {
     }
 
     public void animatePercentageView(final PercentView percentView) {
-        int numerator = percentView.getNumerator();
-        int denominator = percentView.getDenominator();
-        float percentage = (float) numerator / (float) denominator;
-
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, percentage);
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, percentView.getNumerator());
         valueAnimator.setDuration(2000);
         valueAnimator.setInterpolator(new DecelerateInterpolator());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float number = Float.parseFloat(valueAnimator.getAnimatedValue().toString());
-                percentView.setFloatPercentage(number);
-
+                percentView.setAnimatedNumerator(number);
             }
         });
         valueAnimator.start();

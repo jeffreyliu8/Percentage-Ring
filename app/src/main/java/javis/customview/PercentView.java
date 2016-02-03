@@ -73,7 +73,7 @@ public class PercentView extends View {
     private static final float strokeWidth = 16;
     private int ringColor = Color.BLACK;
     private int numerator = 0;
-    private float percentage = -1;
+    private float animatedNumerator = -1;
     private int denominator = 1;
     private String lowerText = "";
     private int upperTextSize = 100;
@@ -136,21 +136,21 @@ public class PercentView extends View {
         canvas.drawArc(rect, 0, 360, false, mArcPaint);
 
         float sweepAngle;
-        if (percentage != -1) {
-            sweepAngle = percentage * 360;
+        if (animatedNumerator != -1) {
+            sweepAngle = animatedNumerator / (float) denominator * 360;
 //            if (percentage == ((float) numerator / (float) denominator)) {
 //                percentage = -1;
 //            }
         } else {
             sweepAngle = (float) numerator / (float) denominator * 360;
         }
-        canvas.drawArc(rect, -90, sweepAngle, false, mArcPaintFill);
+        canvas.drawArc(rect, -89, sweepAngle, false, mArcPaintFill); // 89 looks better than 90..
 
         int xTopTextPos = canvas.getWidth() / 2;
         int yTopTextPos = (int) (((top + width) / 2) - ((upperTextPaint.descent() + upperTextPaint.ascent()) / 2)) - upperYOffset;
         //((textPaint.descent() + textPaint.ascent()) / 2) is the distance from the baseline to the center.
         upperTextPaint.setTextSize(upperTextSize);
-        canvas.drawText(Integer.toString(numerator), xTopTextPos, yTopTextPos, upperTextPaint);
+        canvas.drawText(Integer.toString(numerator != (int) animatedNumerator && animatedNumerator >= 0 ? (int) animatedNumerator : numerator), xTopTextPos, yTopTextPos, upperTextPaint);
 
         int xBottomTextPos = canvas.getWidth() / 2;
         int yBotoomTextPos = (int) (((top + width) / 2) - ((lowerTextPaint.descent() + lowerTextPaint.ascent()) / 2)) + lowerYOffset;
@@ -170,12 +170,13 @@ public class PercentView extends View {
         invalidate();
     }
 
-    public void setFloatPercentage(float percentage) { // 0 to 1
-        if (percentage < 0 || percentage > 1) {
-            Log.e(TAG, "setPercentage: invalid input");
+    // this for animation only
+    public void setAnimatedNumerator(float displayAnimatedNumerator) {
+        if (displayAnimatedNumerator < 0) {
+            Log.e(TAG, "setAnimatedNumerator: invalid input");
             return;
         }
-        this.percentage = percentage;
+        this.animatedNumerator = displayAnimatedNumerator;
         invalidate();
     }
 
