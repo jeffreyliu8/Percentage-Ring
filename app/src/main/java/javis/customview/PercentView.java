@@ -1,5 +1,6 @@
 package javis.customview;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -10,9 +11,10 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 /**
- * Created by jeffliu on 1/20/16.
+ * Created by Jeffrey Liu on 1/20/16.
  */
 public class PercentView extends View {
     private static final String TAG = "PercentView";
@@ -40,8 +42,8 @@ public class PercentView extends View {
 
         try {
             ringColor = a.getColor(R.styleable.PercentView_ringColor, Color.BLACK);
-            numerator = a.getInt(R.styleable.PercentView_numerator, 0);
-            denominator = a.getInt(R.styleable.PercentView_denominator, 1);
+            targetNumerator = a.getInt(R.styleable.PercentView_numerator, 0);
+            targetDenominator = a.getInt(R.styleable.PercentView_denominator, 1);
             lowerText = a.getString(R.styleable.PercentView_lowerText);
             upperTextSize = a.getInt(R.styleable.PercentView_upperTextSize, 100);
             lowerTextSize = a.getInt(R.styleable.PercentView_lowerTextSize, 32);
@@ -72,9 +74,11 @@ public class PercentView extends View {
     private RectF rect;
     private static final float strokeWidth = 16;
     private int ringColor = Color.BLACK;
-    private int numerator = 0;
-    private float animatedNumerator = -1;
-    private int denominator = 1;
+    private float currentNumerator = 0;
+    private float currentDenominator = 0;
+    private float targetNumerator = 0;
+    private float targetDenominator = 0;
+    private float percentage = 0; // from 0.0 to 1.0
     private String lowerText = "";
     private int upperTextSize = 100;
     private int lowerTextSize = 50;
@@ -127,30 +131,21 @@ public class PercentView extends View {
         int width = getWidth();
         int top = 0;
 
-        float strockWidth = strokeWidth;
-
-        rect.set(left + strockWidth, top + strockWidth, left + width - strockWidth, top + width - strockWidth);
+        rect.set(left + strokeWidth, top + strokeWidth, left + width - strokeWidth, top + width - strokeWidth);
         mArcPaint.setColor(ringColor);
         mArcPaint.setAlpha(ALPHA_RING);
         mArcPaintFill.setColor(ringColor);
         canvas.drawArc(rect, 0, 360, false, mArcPaint);
 
-        float sweepAngle;
-        if (animatedNumerator != -1) {
-            sweepAngle = animatedNumerator / (float) denominator * 360;
-//            if (percentage == ((float) numerator / (float) denominator)) {
-//                percentage = -1;
-//            }
-        } else {
-            sweepAngle = (float) numerator / (float) denominator * 360;
-        }
+        float sweepAngle = percentage * 360;
+
         canvas.drawArc(rect, -89, sweepAngle, false, mArcPaintFill); // 89 looks better than 90..
 
         int xTopTextPos = canvas.getWidth() / 2;
         int yTopTextPos = (int) (((top + width) / 2) - ((upperTextPaint.descent() + upperTextPaint.ascent()) / 2)) - upperYOffset;
         //((textPaint.descent() + textPaint.ascent()) / 2) is the distance from the baseline to the center.
         upperTextPaint.setTextSize(upperTextSize);
-        canvas.drawText(Integer.toString(numerator != (int) animatedNumerator && animatedNumerator >= 0 ? (int) animatedNumerator : numerator), xTopTextPos, yTopTextPos, upperTextPaint);
+        canvas.drawText(Integer.toString((Math.round(currentNumerator))), xTopTextPos, yTopTextPos, upperTextPaint);
 
         int xBottomTextPos = canvas.getWidth() / 2;
         int yBotoomTextPos = (int) (((top + width) / 2) - ((lowerTextPaint.descent() + lowerTextPaint.ascent()) / 2)) + lowerYOffset;
@@ -159,32 +154,36 @@ public class PercentView extends View {
         canvas.drawText(lowerText, xBottomTextPos, yBotoomTextPos, lowerTextPaint);
     }
 
-    public void setPercentage(int numerator, int denominator, String lowerText) {
-        if (numerator < 0 || denominator <= 0 || numerator > denominator) {
+    public void setPercentageAndAnimate(int numerator, int denominator, String lowerText) {
+        if (numerator < 0 || denominator <= 0) {
             Log.e(TAG, "setPercentage: invalid input");
             return;
         }
-        this.numerator = numerator;
-        this.denominator = denominator;
+        Log.d(TAG, "setPercentageAndAnimate() called with: " + "numerator = [" + numerator + "], denominator = [" + denominator + "], lowerText = [" + lowerText + "]");
+        final float oldPercentage = this.percentage;
+        final float oldNumerator = this.currentNumerator;
+        final float oldDenominator = this.currentDenominator;
+
+        this.targetNumerator = numerator;
+        this.targetDenominator = denominator;
         this.lowerText = lowerText;
-        invalidate();
-    }
 
-    // this for animation only
-    public void setAnimatedNumerator(float displayAnimatedNumerator) {
-        if (displayAnimatedNumerator < 0) {
-            Log.e(TAG, "setAnimatedNumerator: invalid input");
-            return;
-        }
-        this.animatedNumerator = displayAnimatedNumerator;
-        invalidate();
-    }
+        final float targetPercentage = targetNumerator / targetDenominator;
 
-    public int getDenominator() {
-        return denominator;
-    }
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 100);
+        valueAnimator.setDuration(2000);
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float tempPercentage = Float.parseFloat(valueAnimator.getAnimatedValue().toString()) / 100;
+                percentage = oldPercentage + (targetPercentage - oldPercentage) * tempPercentage;
+                currentNumerator = oldNumerator + Math.round((targetNumerator - oldNumerator) * tempPercentage);
+                currentDenominator = oldDenominator + Math.round((targetDenominator - oldDenominator) * tempPercentage);
 
-    public int getNumerator() {
-        return numerator;
+                invalidate();
+            }
+        });
+        valueAnimator.start();
     }
 }
