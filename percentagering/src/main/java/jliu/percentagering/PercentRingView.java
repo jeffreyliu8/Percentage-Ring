@@ -1,4 +1,4 @@
-package javis.customview;
+package jliu.percentagering;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -14,17 +14,18 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 /**
- * Created by Jeffrey Liu on 1/20/16.
+ * Created by Jeffrey Liu on 3/7/17.
  */
-public class PercentView extends View {
+
+public class PercentRingView extends View {
     private static final String TAG = "PercentView";
 
-    public PercentView(Context context) {
+    public PercentRingView(Context context) {
         super(context);
         init();
     }
 
-    public PercentView(Context context, AttributeSet attrs) {
+    public PercentRingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
 
@@ -54,7 +55,7 @@ public class PercentView extends View {
         }
     }
 
-    public PercentView(Context context, AttributeSet attrs, int defStyle) {
+    public PercentRingView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }

@@ -3,22 +3,21 @@ package javis.customview;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.util.Random;
 
+import jliu.percentagering.PercentRingView;
+
 public class DefaultActivity extends AppCompatActivity {
-    PercentView circle1;
-    PercentView circle2;
-    PercentView circle3;
+    PercentRingView circle1;
+    PercentRingView circle2;
+    PercentRingView circle3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_default);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -39,9 +38,9 @@ public class DefaultActivity extends AppCompatActivity {
             }
         });
 
-        circle1 = (PercentView) findViewById(R.id.circle1);
-        circle2 = (PercentView) findViewById(R.id.circle2);
-        circle3 = (PercentView) findViewById(R.id.circle3);
+        circle1 = (PercentRingView) findViewById(R.id.circle1);
+        circle2 = (PercentRingView) findViewById(R.id.circle2);
+        circle3 = (PercentRingView) findViewById(R.id.circle3);
 
         circle1.setPercentageAndAnimate(2, 4, "of 4 days");
         circle2.setPercentageAndAnimate(8, 30, "of 30 min");
