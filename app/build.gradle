@@ -19,12 +19,18 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url  "http://dl.bintray.com/jeffreyliu8/PercentageRing"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
 
-    compile project(":percentagering")
-    //compile 'com.github.jeffreyliu8.nfsd:floydsteinbergdithering:0.0.2@aar'
+    //compile project(":percentagering")
+    compile 'jliu:percentagering:0.0.1'
 }
