@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:customNS="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="javis.customview.DefaultActivity"
     tools:showIn="@layout/activity_default">
 
@@ -42,7 +41,7 @@
                     android:text="1/10 - 1/16"
                     android:textColor="@android:color/white" />
 
-                <jliu.percentagering.PercentRingView xmlns:customNS="http://schemas.android.com/apk/res/javis.customview"
+                <jliu.percentagering.PercentRingView
                     android:id="@+id/circle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +67,7 @@
                 android:text="DAILY"
                 android:textColor="@color/colorRingFillBlue" />
 
-            <jliu.percentagering.PercentRingView xmlns:customNS="http://schemas.android.com/apk/res/javis.customview"
+            <jliu.percentagering.PercentRingView
                 android:id="@+id/circle2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +109,7 @@
                     android:text="January"
                     android:textColor="@android:color/white" />
 
-                <jliu.percentagering.PercentRingView xmlns:customNS="http://schemas.android.com/apk/res/javis.customview"
+                <jliu.percentagering.PercentRingView
                     android:id="@+id/circle3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
