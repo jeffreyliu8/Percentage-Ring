@@ -1,15 +1,72 @@
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 # Percentage-Ring
 
-This is a demo app of custom view for showing percentage in ring.
-By the way, the ring progress can increase with animation!
+This is a custom percentage ring.
 
-![Output sample](https://github.com/jeffreyliu8/Percentage-Ring/blob/master/preview.png)
+Using Percentage Ring
+----------------
 
-The MIT License (MIT)
-Copyright © 2015 Jeffrey Liu
+### Setup
+In your app module build.gradle(before jcenter is ready)
+```groovy
+repositories {
+    maven {
+        url  "http://dl.bintray.com/jeffreyliu8/PercentageRing"
+    }
+}
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+##### Dependencies
+```groovy
+dependencies {
+    compile 'jliu:percentagering:0.0.1'
+}
+```
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+A quick example is shown below:
+
+```java
+PercentRingView ring = (PercentRingView) findViewById(R.id.ring);
+ring.setPercentageAndAnimate(2, 4, "of 4 days");
+```
+
+And for layout xml:
+```xml
+ <jliu.percentagering.PercentRingView
+                    xmlns:customNS="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/ring"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    customNS:denominator="4"
+                    customNS:lowerText="of 4 days"
+                    customNS:numerator="2"
+                    customNS:ringColor="@color/colorRingFillGreen" />
+```
+![Output sample](https://github.com/jeffreyliu8/Percentage-Ring/blob/master/preview.gif)
+
+Requirements
+--------------
+Requires a minimum SDK version of 11
+
+Developed By
+-------
+Jeffrey Liu - <jeffreyliu8@gmail.com>
+
+License
+-------
+
+    Copyright 2017 Jeffrey Liu
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
